@@ -1,0 +1,9 @@
+matplotlib
+numpy
+seaborn
+pandas
+scipy
+flake8
+autopep8
+pytest
+pyqt5
