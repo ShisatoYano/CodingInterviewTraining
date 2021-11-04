@@ -1,5 +1,3 @@
-import random
-
 def main():
     N = int(input("size of sequence: "))
     
