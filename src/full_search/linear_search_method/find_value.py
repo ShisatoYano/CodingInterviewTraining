@@ -7,7 +7,9 @@ def main():
     
     print("N:{} v:{}".format(N, v))
     
-    a = random.sample(range(100), k=N)
+    a = [0] * N
+    for i in range(N):
+        a[i] = i
     print(a)
     
     # linear search
