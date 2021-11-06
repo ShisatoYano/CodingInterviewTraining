@@ -2,7 +2,7 @@ def func(N):
     # report recursive function was called
     print("func({}) was called".format(N))
     
-    if N == 0: return 0
+    if N == 0: return 0 # base case
     
     # calculate recursively
     result = N + func(N - 1)
