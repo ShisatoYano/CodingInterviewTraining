@@ -4,6 +4,7 @@
 # 1. move from step_i to step_i+1, cost is h_i-h_i+1
 # 2. move from step_i to step_i+2, cost is h_i-h_i+2
 # calculate minimum sum of cost from step_0 to step_N-1
+# O(N)
 
 def main():
     h = [2, 9, 4, 5, 1, 6, 10]
