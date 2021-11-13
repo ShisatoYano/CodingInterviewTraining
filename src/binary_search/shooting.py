@@ -10,8 +10,7 @@
 # N個の風船すべてについてペナルティをx以下にできるかを判定する
 # 各風船を何秒以内に割るべきかを決めて、時間制限が差し迫っているものから割る
 # すべての風船が割れたらYes, 途中で高さがxを超える風船が現れたらNo
-
-import math
+# 全体計算量: O(N log N log M)
 
 INF = 200000
 
@@ -25,6 +24,7 @@ def main():
         s[i] = h[i]
     
     # 高さ方向の二分探索
+    # 反復回数 M = max(H_0+NS_0, ..., H_N-1+NS_N-1)
     bottom, top = 0, INF
     while (top - bottom) > 1:
         mid = (bottom + top) / 2
@@ -40,7 +40,7 @@ def main():
             else: t[i] = (mid - h[i]) / s[i] # 時間制限を計算
         
         # 時間制限が迫っている順にソート
-        t.sort()
+        t.sort() # O(N log N)
         
         for i in range(N):
             if t[i] < i: ok = False # 時間切れ
