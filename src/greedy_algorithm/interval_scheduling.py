@@ -17,9 +17,22 @@ def main():
     intervals =[[9,16],[11,15],[10,12],[15,18],[19,23],[13,19]]
     
     # 終端時刻が早い順にソートする
+    # O(N log N) ここがボトルネックになる
     intervals_sorted = sorted(intervals, key=lambda x: x[1])
     
-    print(intervals_sorted)
+    # 貪欲に選ぶ
+    # O(N)
+    result = 0
+    current_end_time = 0
+    for i in range(6):
+        # 最後に選んだ区間と被るのは除く
+        if intervals_sorted[i][0] < current_end_time: continue
+        
+        result += 1
+        
+        current_end_time = intervals_sorted[i][1]
+    
+    print(result)
 
 if __name__ == "__main__":
     main()
