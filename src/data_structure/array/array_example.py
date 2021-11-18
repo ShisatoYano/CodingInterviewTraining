@@ -1,6 +1,7 @@
 # 配列の使い方
 # C++: std::vector
 # Python: list
+# Pythonのlistはポインタの配列であり、データの実体は配列の外にある
 
 def main():
     a = [4, 3, 12, 7, 11, 1, 9, 8, 14, 6]
