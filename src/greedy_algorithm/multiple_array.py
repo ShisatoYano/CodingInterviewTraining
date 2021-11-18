@@ -8,3 +8,24 @@
 # 以下の条件を満たすようにD_0+D_1+...+D_N-1の最小値を求める問題といえる
 # A_i + (D_i + ... + D_N-1)はB_iの倍数
 # D_N-1を必要以上に大きくするメリットはない
+
+def main():
+    N = 5
+    
+    A = [2, 5, 1, 6, 4]
+    
+    B = [40, 20, 90, 30, 100]
+    
+    sum = 0
+    for i in reversed(range(N)):
+        A[i] += sum # 前回までの操作回数を足す
+        amari = A[i] % B[i]
+        print(amari)
+        D = 0
+        if amari != 0: D = B[i] - amari
+        sum += D
+    
+    print(sum)
+
+if __name__ == "__main__":
+    main()
