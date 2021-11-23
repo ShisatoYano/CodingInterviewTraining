@@ -5,9 +5,12 @@
 # 各要素が全体の何番目かという情報を管理しなくてよい
 
 # ノードクラス
+# ノード削除時のポインタ繋ぎ変えをしやすくするために
+# 双方向連結リスト(bidirectional linked list)を用いる
 class Node:
     def __init__(self, name):
-        self.next = None # 次がどのノードを指すか
+        self.next = None # 自分の前がどのノードを指すか
+        self.prev = None # 自分の後ろがどのノードを指すか
         self.name = name # ノードに付随している値
 
 # 連結リストクラス
@@ -16,6 +19,7 @@ class LinkedList:
     def __init__(self):
         self.nil = Node(None) # 番兵
         self.nil.next = self.nil
+        self.nil.prev = self.nil
     
     # 連結リストを出力する
     def print_list(self):
@@ -30,7 +34,16 @@ class LinkedList:
     # そのためinsert(v, nil)を呼び出す操作はリストの先頭への挿入を表す
     def insert(self, v: Node, p: Node):
         v.next = p.next
+        p.next.prev = v
         p.next = v
+        v.prev = p
+    
+    # ノードvを削除する
+    def erase(self, v: Node):
+        if v == self.nil: return # vが番兵の場合は何もしない
+        v.prev.next = v.next
+        v.next.prev = v.prev
+        del v
 
 def main():
     # 初期化
@@ -47,9 +60,15 @@ def main():
         # 作成したノードを連結リストの先頭に挿入する
         l.insert(node, l.nil)
         
-        # 各ステップの連結リストの様子を出力する
-        print("step {}:".format(i), end=' ')
-        l.print_list()
+        # 「渡辺」ノードを保持しておく
+        if name == "watanabe": watanabe = node
+    
+    # 「渡辺」ノードを削除する
+    print("before:", end=' ')
+    l.print_list() # 削除前を出力
+    l.erase(watanabe)
+    print("after:", end=' ')
+    l.print_list() # 削除後を出力
 
 if __name__ == "__main__":
     main()
