@@ -28,3 +28,89 @@ class LinkedList:
 class HashTable:
     def __init__(self):
         self.table = [None] * 1000
+    
+    # 1000で割った余りをハッシュ値として扱う
+    def hash(self, key):
+        return key % 1000
+    
+    def add(self, key, value):
+        hashed_key = self.hash(key)
+        if self.table[hashed_key]: # 既にキーにデータが存在していたら
+            ll = self.table[hashed_key] # 既に存在しているデータ(連結リストの先頭)
+            while ll:
+                # 連結リストの最後尾までループして最後にデータを追加する
+                if not ll.next: # 連結リストの最後
+                    ll.next = LinkedList(value) # 新しい値を連結
+                    break
+                else:
+                    ll = ll.next
+        else: # データが存在していない場合
+            self.table[hashed_key] = LinkedList(value) # 新しい値を連結リストに連結
+    
+    def get(self, key):
+        values = []
+        hashed_key = self.hash(key)
+        ll = self.table[hashed_key]
+        if not ll: # 指定したキーにデータが存在しない場合
+            return -1
+        while ll: # 連結リストが存在する場合
+            values.append(ll.value) # 連結リストの値をリストに追加
+            if not ll.next: # リストの最後尾
+                return values
+            else:
+                ll = ll.next
+    
+    def remove(self, key, value):
+        hashed_key = self.hash(key)
+        ll = self.table[hashed_key]
+        if not ll: # 指定したキーにデータが存在しない場合
+            print("No Data")
+            return
+        if ll.value == value: # 削除するデータが見つかった場合
+            if ll.next: # 先頭を削除してリストを1つ前にずらす
+                self.table[hashed_key] = ll.next
+            else: # データが1つだけの場合
+                self.table[hashed_key] = None
+            print(f"Key:{key}, Value:{value} Removed")
+            return
+        ll_prev = ll
+        ll = ll_prev.next
+        while ll: # 指定したキーに複数の連結リストが存在する場合
+            if ll.value == value:
+                ll_prev.next = ll.next
+                print(f"Key:{key}, Value:{value} Removed")
+                return
+            else:
+                ll_prev
+                ll = ll.next
+        print("Data not found")
+
+def main():
+    # 初期化
+    ht = HashTable()
+    
+    # 追加
+    ht.add(1, "orange")
+    ht.add(2, "apple")
+    ht.add(3, "grape")
+    ht.add(1001, "mikan")
+    ht.add(1003, "muscat")
+    ht.add(2002, "green apple")
+    ht.add(3002, "pineapple")
+    ht.add(2004, "melon")
+    
+    # データを表示
+    for i in range(1, 5):
+        print(f'Key:{i}, Value:{ht.get(i)}')
+    
+    # 削除
+    ht.remove(1, "orange")
+    ht.remove(2002, "green apple")
+    ht.remove(3, "muscat")
+    
+    # データを表示
+    for i in range(1, 5):
+        print(f'Key:{i}, Value:{ht.get(i)}')
+
+if __name__ == "__main__":
+    main()
