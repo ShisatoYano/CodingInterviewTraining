@@ -36,3 +36,27 @@ class HashTable(object):
         
         self.keys[index] = key
         self.values[index] = data
+    
+    # 値の取得
+    def lookup(self, key):
+        # ハッシュ関数でキーからインデックスを求める
+        index = self.make_hash(key)
+        
+        # インデックスに基づき値を探索
+        while self.keys[index] is not None:
+            if self.keys[index] == key:
+                return self.values[index]
+            index = (index + 1) % self.size
+        
+        return False
+
+if __name__ == "__main__":
+    hash_table = HashTable()
+    
+    hash_table.add("apple", 10)
+    hash_table.add("banana", 5)
+    hash_table.add("orange", 20)
+    
+    print(hash_table.keys)
+    print(hash_table.values)
+    print(hash_table.lookup("apple"))
