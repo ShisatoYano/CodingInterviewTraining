@@ -58,11 +58,49 @@ class Graph(object):
                     u_id = self.vertices[u].get_id()
                     edges.append((v_id, u_id, self.adj_matrix[u][v])) # エッジ両端のノードIDと重み
         return edges
+    
+    # ノードのセット
+    def set_vertex(self, vtx, id):
+        if 0 <= vtx < self.vertex_num:
+            self.vertices[vtx].set_id(id)
+    
+    # ノードのインデックスの取得
+    def get_vertex(self, n):
+        for idx in range(0, self.vertex_num):
+            if n == self.vertices[idx].get_id():
+                return idx
+        return -1
+    
+    # エッジの追加
+    def add_edge(self, frm, to, weight=0):
+        if self.get_vertex(frm) != -1 and self.get_vertex(to) != -1:
+            self.adj_matrix[self.get_vertex(frm)][self.get_vertex(to)] = weight
+            self.adj_matrix[self.get_vertex(to)][self.get_vertex(frm)] = weight
 
 # メイン
 if __name__ == "__main__":
     graph = Graph(5)
     
+    graph.print_matrix()
+    print("Node index:", graph.get_vertices())
+    print("Edges:", graph.get_edges())
+    print("----------------------------------")
+    
+    graph.set_vertex(0, 'a')
+    graph.set_vertex(1, 'b')
+    graph.set_vertex(2, 'c')
+    graph.set_vertex(3, 'd')
+    graph.set_vertex(4, 'e')
+    graph.print_matrix()
+    print("Node index:", graph.get_vertices())
+    print("Edges:", graph.get_edges())
+    print("----------------------------------")
+    
+    graph.add_edge('a', 'e', 10)
+    graph.add_edge('a', 'c', 20)
+    graph.add_edge('c', 'b', 30)
+    graph.add_edge('b', 'e', 40)
+    graph.add_edge('e', 'd', 50)
     graph.print_matrix()
     print("Node index:", graph.get_vertices())
     print("Edges:", graph.get_edges())
