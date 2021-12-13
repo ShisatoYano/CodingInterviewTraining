@@ -101,6 +101,58 @@ class BST:
             else:
                 cur_node = cur_node.right
         return False
+    
+    # 最小値を探索する
+    def find_min(self, cur_node=None):
+        if self.root is None:
+            return None
+        while cur_node.left:
+            cur_node = cur_node.left
+        return cur_node
+    
+    # 削除
+    # ルートから順に着目しているノードと目的の値を比較
+    # 目的の値 < 着目しているノードなら左の子
+    # 着目しているノード <= 目的の値なら右の子
+    # 着目ノードが削除対象かつ子供を持たないなら削除
+    # 削除ノードが子を1つしか持たない場合、削除ノードを削除して子と置き換える
+    # 削除ノードの子が2つの場合
+    # 削除ノードの右の子から最小値を探索する
+    # 探索したノードを削除対象のノードと置き換えて、
+    # 削除対象のノードを削除する
+    # このとき、探索ノードの右の子を探索ノードの元位置に置き換える
+    def delete_node(self, data):
+        if self.root is None:
+            return False
+        else:
+            self.root = self._delete_node(data, self.root)
+    
+    # 再帰呼び出し用
+    def _delete_node(self, data, cur_node):
+        if cur_node is None:
+            return cur_node
+        # 削除するデータが現在のノードより小さい場合は左にある
+        if data < cur_node.data:
+            cur_node.left = self._delete_node(data, cur_node.left)
+        # 削除するデータが現在のノードより大きい場合は右にある
+        elif data > cur_node.data:
+            cur_node.right = self._delete_node(data, cur_node.right)
+        # データを削除する
+        else:
+            # 子ノードが1つまたはなしの場合
+            if cur_node.left is None:
+                temp = cur_node.right
+                cur_node = None
+                return temp
+            elif cur_node.right is None:
+                temp = cur_node.left
+                cur_node.left = None
+                return temp
+            # 子ノードが2つの場合は右側の一番小さい値
+            temp = self.find_min(cur_node.right)
+            cur_node.data = temp.data
+            cur_node.right = self._delete_node(temp.data, cur_node.right)
+        return cur_node
         
 if __name__ == "__main__":
     bst = BST()
@@ -121,3 +173,7 @@ if __name__ == "__main__":
     print("Find 6 by roop:", bst.find_by_roop(6))
     print("Find 12 by rec:", bst.find_by_rec(12))
     print("Find 12 by roop:", bst.find_by_roop(12))
+    
+    bst.delete_node(3)
+    
+    bst.inorder_print_tree()
