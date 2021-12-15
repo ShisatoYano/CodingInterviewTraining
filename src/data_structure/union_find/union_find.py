@@ -45,3 +45,20 @@ class UnionFind(object):
         self.par[y] = x
         self.siz[x] += self.siz[y]
         return True
+    
+    # xを含むグループのサイズ
+    def size(self, x):
+        return self.siz[self.root(x)]
+
+if __name__ == "__main__":
+    uf = UnionFind(7)
+    
+    uf.unite(1, 2)
+    uf.unite(2, 3)
+    uf.unite(5, 6)
+    
+    print(uf.is_same(1, 3))
+    print(uf.is_same(2, 5))
+    
+    uf.unite(1, 6)
+    print(uf.is_same(2, 5))
