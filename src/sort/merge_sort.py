@@ -26,6 +26,10 @@ def merge_sort(a, left, right):
     
     # いったん左と右のソート結果をコピーしておく
     # 右は左右反転
+    # サイズO(N)の外部メモリを必要とするので
+    # 組み込み系をはじめとしてソフトウェアの移植性を
+    # 重視しつつアルゴリズムを常に高速に動作させたい場合は
+    # マージソートは採用されにくい傾向にある
     buf = []
     for i in range(left, mid): buf.append(a[i])
     for i in range(right-1, mid-1, -1): buf.append(a[i])
