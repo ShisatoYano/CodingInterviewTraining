@@ -4,6 +4,7 @@
 # 頂点vから未訪問の頂点xへの探索: dist[x]の値はdist[v]+1となる
 # 配列distは、初期状態では配列全体を-1に初期化しておく
 # dist[v]==-1とseen[v]==falseは同じ意味を持つ
+# 頂点数Vと辺数E=>計算量はO(V+E)
 
 import queue
 
