@@ -26,13 +26,6 @@ graph = [[Edge(1,3), Edge(3,100)],               # 頂点0
 
 N = len(graph) # 頂点の数
 
-# 緩和を実施する関数
-def choose_min(a, b):
-    if a > b:
-        a = b
-        return True
-    else: return False
-
 def main():
     s = 0 # 始点とする頂点の番号
     
@@ -56,8 +49,6 @@ def main():
                     dist[e.to] = (dist[v] + e.w)
                     update = True
                 else: update = False
-                # if choose_min(dist[e.to], dist[v] + e.w):
-                #     update = True
         
         # 更新がなかったら、既に最短路が求められている
         if not update == False: break
