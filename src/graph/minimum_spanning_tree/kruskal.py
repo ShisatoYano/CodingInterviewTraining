@@ -22,6 +22,9 @@ GRAPH = [(5, (0, 3)), (6, (0, 5)), (3, (0, 7)),
 # 辺の数
 M = len(GRAPH)
 
+# 頂点の数
+N = 8
+
 # Union-Findクラス
 class UnionFind(object):
     # 初期化
@@ -66,3 +69,29 @@ class UnionFind(object):
     # xを含むグループのサイズ
     def size(self, x):
         return self.siz[self.root(x)]
+
+def main():
+    # グラフの各辺を重みが小さい順にソートする
+    GRAPH.sort()
+    
+    # クラスカル法
+    res = 0
+    uf = UnionFind(N)
+    for i in range(M):
+        edge = GRAPH[i]
+        
+        w = edge[0]
+        u = edge[1][0]
+        v = edge[1][1]
+        
+        # 辺(u, v)の追加によってサイクルが形成されるときは追加しない
+        if uf.is_same(u, v): continue
+        
+        # 辺(u, v)を追加する
+        res += w
+        uf.unite(u, v)
+    
+    print(res)
+
+if __name__ == "__main__":
+    main()
